@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <h1>Weather App</h1>
+
+    <form method="get" action="/weather">
+        <input type="text" name="city" placeholder="Enter City Name" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if weather_data %}
+        <h2>Weather Information for {{ weather_data['name'] }}</h2>
+        <p>Temperature: {{ weather_data['main']['temp'] }}°C</p>
+        <p>Weather: {{ weather_data['weather'][0]['description'] }}</p>
+        <p>Humidity: {{ weather_data['main']['humidity'] }}%</p>
+    {% else %}
+        {% if not error %}
+            <p>No data available. Please try again.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
